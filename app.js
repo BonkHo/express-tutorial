@@ -1,27 +1,18 @@
 const express = require("express");
+const path = require("path");
+
 const app = express();
 
-// app.get
+app.use(express.static("./public"));
+
 app.get("/", (req, res) => {
-	res.status(200).send("Home Page");
-	res.end();
+	res.sendFile(path.resolve(__dirname, "./navbar-app/index.html"));
 });
 
-app.get("/about", (req, res) => {
-	res.status(200).send("About Page");
-	res.end();
-});
-
-// app.post
-// app.put
-// app.delete
-// app.all
 app.all("*", (req, res) => {
-	res.status(404).send("404 Not Found");
-	res.end();
+	res.status(404).send("Page Not Found");
 });
-// app.use
-// app.listen
+
 app.listen(5000, () => {
-	console.log("Server is running at: http://localhost:5000");
+	console.log("Server is running on: http://localhost:5000");
 });
