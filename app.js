@@ -28,6 +28,23 @@ app.get("/api/products/:productID", (req, res) => {
 	res.json(singleProduct);
 });
 
+app.get("/api/v1/query", (req, res) => {
+	// console.log(req.query);\
+	const { search, limit } = req.query;
+	let sortedProducts = [...products];
+	if (search) {
+		sortedProducts = sortedProducts.filter((product) => {
+			return product.name.startsWith(search);
+		});
+	}
+
+	if (limit) {
+		sortedProducts = sortedProducts.slice(0, Number(limit));
+	}
+
+	res.status(200).json(sortedProducts);
+});
+
 app.all("*", (req, res) => {
 	res.send("<h1> Page Not Found </h1>");
 });
