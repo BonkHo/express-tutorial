@@ -1,12 +1,14 @@
 const express = require("express");
 const app = express();
+const morgan = require("morgan");
 
 // req => middleware => res
 const logger = require("./logger.js");
 const authorize = require("./authorize.js");
 
 // Applies logger middleware to all requests after the app.use()
-app.use([logger, authorize]);
+// app.use([logger, authorize]);
+app.use(morgan("tiny"));
 
 app.get("/", (req, res) => {
 	res.send("Home page");
