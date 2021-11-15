@@ -3,9 +3,10 @@ const app = express();
 
 // req => middleware => res
 const logger = require("./logger.js");
+const authorize = require("./authorize.js");
 
 // Applies logger middleware to all requests after the app.use()
-app.use(logger);
+app.use([logger, authorize]);
 
 app.get("/", (req, res) => {
 	res.send("Home page");
