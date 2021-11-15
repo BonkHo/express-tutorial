@@ -2,21 +2,25 @@ const express = require("express");
 const app = express();
 
 // req => middleware => res
+const logger = require("./logger.js");
 
-const logger = (req, res, next) => {
-	const method = req.method;
-	const url = req.url;
-	const time = new Date().getFullYear();
-	console.log(method, url, time);
-	next();
-};
+// Applies logger middleware to all requests after the app.use()
+app.use(logger);
 
-app.get("/", logger, (req, res) => {
+app.get("/", (req, res) => {
 	res.send("Home page");
 });
 
-app.get("/about", logger, (req, res) => {
+app.get("/about", (req, res) => {
 	res.send("About page");
+});
+
+app.get("/api/products", (req, res) => {
+	res.send("Products page");
+});
+
+app.get("/api/items", (req, res) => {
+	res.send("Items page");
 });
 
 app.listen(5000, () => {
