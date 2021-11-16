@@ -1,29 +1,16 @@
 const express = require("express");
 const app = express();
-const morgan = require("morgan");
+let { people } = require("./data.js");
 
-// req => middleware => res
-const logger = require("./logger.js");
-const authorize = require("./authorize.js");
+// static assets
+app.use(express.static("./methods-public"));
 
-// Applies logger middleware to all requests after the app.use()
-// app.use([logger, authorize]);
-app.use(morgan("tiny"));
-
-app.get("/", (req, res) => {
-	res.send("Home page");
+app.get("/api/people", (req, res) => {
+	res.status(200).json({ success: true, people: people });
 });
 
-app.get("/about", (req, res) => {
-	res.send("About page");
-});
-
-app.get("/api/products", (req, res) => {
-	res.send("Products page");
-});
-
-app.get("/api/items", (req, res) => {
-	res.send("Items page");
+app.post("/login", (req, res) => {
+	res.send("login");
 });
 
 app.listen(5000, () => {
