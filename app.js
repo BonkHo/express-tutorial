@@ -5,12 +5,20 @@ let { people } = require("./data.js");
 // static assets
 app.use(express.static("./methods-public"));
 
+// parse form data
+app.use(express.urlencoded({ extended: false }));
+
 app.get("/api/people", (req, res) => {
 	res.status(200).json({ success: true, people: people });
 });
 
 app.post("/login", (req, res) => {
-	res.send("login");
+	const { name } = req.body;
+	if (name) {
+		return res.status(200).send(`Welcome ${name}`);
+	}
+
+	res.status(401).send("Please provide a name");
 });
 
 app.listen(5000, () => {
