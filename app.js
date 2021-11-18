@@ -30,6 +30,20 @@ app.post("/api/postman/people", (req, res) => {
 	res.status(201).json({ success: true, data: [...people, name] });
 });
 
+app.put("/api/people/:id", (req, res) => {
+	const { id } = req.params;
+	const { name } = req.body;
+	if (!name) {
+		return res.status(400).json({ success: false, error: "Name is required" });
+	}
+	const person = people.find((people) => people.id === Number(id));
+	if (!person) {
+		return res.status(404).json({ success: false, error: "Person not found" });
+	}
+	person.name = name;
+	res.status(200).json({ success: true, data: people });
+});
+
 app.post("/login", (req, res) => {
 	const { name } = req.body;
 	if (name) {
