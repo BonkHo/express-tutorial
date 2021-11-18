@@ -22,6 +22,14 @@ app.post("/api/people", (req, res) => {
 	res.status(201).json({ success: true, person: name });
 });
 
+app.post("/api/postman/people", (req, res) => {
+	const { name } = req.body;
+	if (!name) {
+		return res.status(400).json({ success: false, error: "Name is required" });
+	}
+	res.status(201).json({ success: true, data: [...people, name] });
+});
+
 app.post("/login", (req, res) => {
 	const { name } = req.body;
 	if (name) {
