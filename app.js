@@ -38,9 +38,23 @@ app.put("/api/people/:id", (req, res) => {
 	}
 	const person = people.find((people) => people.id === Number(id));
 	if (!person) {
-		return res.status(404).json({ success: false, error: "Person not found" });
+		return res
+			.status(404)
+			.json({ success: false, error: `Person with id ${id} not found` });
 	}
 	person.name = name;
+	res.status(200).json({ success: true, data: people });
+});
+
+app.delete("/api/people/:id", (req, res) => {
+	const { id } = req.params;
+	const person = people.find((people) => people.id === Number(id));
+	if (!person) {
+		return res
+			.status(404)
+			.json({ success: false, error: `Person with id ${id} not found` });
+	}
+	people = people.filter((people) => people.id !== Number(id));
 	res.status(200).json({ success: true, data: people });
 });
 
