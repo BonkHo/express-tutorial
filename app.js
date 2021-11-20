@@ -1,9 +1,10 @@
 const express = require("express");
 const app = express();
-const people = require("./routes/people.js");
-const auth = require("./routes/auth.js");
-// Middleware
 
+const people = require("./routes/people");
+const auth = require("./routes/auth");
+
+// Middleware
 // static assets
 app.use(express.static("./methods-public"));
 // parse form data
